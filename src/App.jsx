@@ -1,7 +1,12 @@
-import "./App.css";
+import { Counter, Input } from "./components";
 
 function App() {
-  return <h1>Hello World</h1>;
+  return (
+    <>
+      <Counter />
+      <Input />
+    </>
+  );
 }
 
 export default App;
