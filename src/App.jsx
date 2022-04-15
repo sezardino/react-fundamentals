@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { AddPostForm, PostList } from "./components";
 import { PostsFilter } from "./components/PostsFilters";
-import { Button, Modal } from "./components/ui";
+import { Button, Modal, Pagination } from "./components/ui";
 import { Loader } from "./components/ui/Loader/Loader";
 import { useFetch, usePosts } from "./hooks";
 import { PostsService } from "./services";
@@ -11,15 +11,18 @@ function App() {
   const [sortValue, setSortValue] = useState("");
   const [searchString, setSearchString] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [limit, setLimit] = useState(10);
+  const [page, setPage] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
   const { filteredPosts } = usePosts(posts, sortValue, searchString);
   const {
     error: postsError,
     getData: getPosts,
     isLoading: postsLoading,
-  } = useFetch(async () => {
-    const posts = await PostsService.getAllPosts();
-
-    setPosts(posts);
+  } = useFetch(async (limit, page) => {
+    const response = await PostsService.getAllPosts(limit, page);
+    setTotalCount(+response.totalCount);
+    setPosts(response.data);
   });
 
   const onAddPost = (post) => {
@@ -31,8 +34,8 @@ function App() {
   };
 
   useEffect(() => {
-    getPosts();
-  }, []);
+    getPosts(limit, page);
+  }, [page]);
 
   return (
     <>
@@ -63,6 +66,14 @@ function App() {
           title="ReactJS"
         />
       )}
+
+      <Pagination
+        style={{ margin: "50px 0" }}
+        total={totalCount}
+        current={page}
+        setCurrent={setPage}
+        limit={limit}
+      />
 
       <Modal visible={isModalVisible} setVisible={setIsModalVisible}>
         <AddPostForm onAddPost={onAddPost} />

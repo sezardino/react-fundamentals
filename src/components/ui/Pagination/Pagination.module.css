@@ -1,0 +1,19 @@
+.pagination {
+  display: flex;
+  gap: 25px;
+}
+
+.page {
+  transition: all 0.4s ease-in-out;
+  transition-property: background-color, color;
+  padding: 15px;
+  font-weight: 900;
+  background-color: transparent;
+  border: 2px solid teal;
+}
+
+.page:hover,
+.current {
+  background-color: teal;
+  color: white;
+}
