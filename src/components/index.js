@@ -1,3 +1,3 @@
 export * from "./PostItem";
-export * from "./PostList";
+export * from "./PostList/PostList";
 export * from "./AddPostForm";
