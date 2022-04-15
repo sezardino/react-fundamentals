@@ -1,8 +1,8 @@
-import axios from "axios";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { AddPostForm, PostList } from "./components";
 import { PostsFilter } from "./components/PostsFilters";
 import { Button, Modal } from "./components/ui";
+import { Loader } from "./components/ui/Loader/Loader";
 import { usePosts } from "./hooks";
 import { PostsService } from "./services";
 
@@ -12,6 +12,7 @@ function App() {
   const [searchString, setSearchString] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { filteredPosts } = usePosts(posts, sortValue, searchString);
+  const [isFetchingPosts, setIsFetchingPosts] = useState(true);
 
   const onAddPost = (post) => {
     setPosts([...posts, { ...post, id: posts.length + 1 }]);
@@ -22,9 +23,11 @@ function App() {
   };
 
   const fetchPosts = async () => {
+    setIsFetchingPosts(true);
     const posts = await PostsService.getAllPosts();
 
     setPosts(posts);
+    setIsFetchingPosts(false);
   };
 
   useEffect(() => {
@@ -45,11 +48,18 @@ function App() {
         search={searchString}
         changeSearch={setSearchString}
       />
-      <PostList
-        onDeletePost={onDeletePost}
-        posts={filteredPosts}
-        title="ReactJS"
-      />
+
+      {isFetchingPosts ? (
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <Loader />
+        </div>
+      ) : (
+        <PostList
+          onDeletePost={onDeletePost}
+          posts={filteredPosts}
+          title="ReactJS"
+        />
+      )}
       <Modal visible={isModalVisible} setVisible={setIsModalVisible}>
         <AddPostForm onAddPost={onAddPost} />
       </Modal>
