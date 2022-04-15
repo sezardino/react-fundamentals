@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { AddPostForm, PostList } from "./components";
 import { PostsFilter } from "./components/PostsFilters";
 import { Button, Modal } from "./components/ui";
+import { usePosts } from "./hooks";
 
 function App() {
   const [posts, setPosts] = useState([
@@ -16,6 +17,7 @@ function App() {
   const [sortValue, setSortValue] = useState("");
   const [searchString, setSearchString] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const { filteredPosts } = usePosts(posts, sortValue, searchString);
 
   const onAddPost = (post) => {
     setPosts([...posts, { ...post, id: posts.length + 1 }]);
@@ -24,20 +26,6 @@ function App() {
   const onDeletePost = (id) => {
     setPosts(posts.filter((post) => post.id !== id));
   };
-
-  const sortedPosts = useMemo(() => {
-    if (!sortValue) {
-      return posts;
-    }
-
-    return [...posts].sort((a, b) => a[sortValue].localeCompare(b[sortValue]));
-  }, [sortValue, posts]);
-
-  const filteredPosts = useMemo(() => {
-    return sortedPosts.filter((post) =>
-      post.title.toLowerCase().includes(searchString.toLocaleLowerCase())
-    );
-  }, [sortedPosts, searchString]);
 
   return (
     <>
