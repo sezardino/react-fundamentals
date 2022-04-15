@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AddPostForm, PostList } from "./components";
+import { Select } from "./components/ui";
 
 function App() {
   const [posts, setPosts] = useState([
@@ -11,6 +12,7 @@ function App() {
       body: "You can start coding right away.",
     },
   ]);
+  const [sortValue, setSortValue] = useState("");
 
   const onAddPost = (post) => {
     setPosts([...posts, { ...post, id: posts.length + 1 }]);
@@ -27,9 +29,31 @@ function App() {
       <h1>Posts not found</h1>
     );
 
+  const onSortChange = (evt) => {
+    setSortValue(evt.target.value);
+    setPosts((posts) =>
+      [...posts].sort((a, b) =>
+        a[evt.target.value].localeCompare(b[evt.target.value])
+      )
+    );
+  };
+
+  const selectProps = {
+    name: "sort-by",
+    defaultValue: "Sort By",
+    value: sortValue,
+    onChange: onSortChange,
+    options: [
+      { value: "title", label: "Title" },
+      { value: "body", label: "Body" },
+    ],
+  };
+
   return (
     <>
       <AddPostForm onAddPost={onAddPost} />
+      <hr />
+      <Select {...selectProps} />
       {content}
     </>
   );
