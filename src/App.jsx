@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AddPostForm, PostList } from "./components";
-import { Select } from "./components/ui";
+import { PostsFilter } from "./components/PostsFilters";
 
 function App() {
   const [posts, setPosts] = useState([
@@ -13,6 +13,7 @@ function App() {
     },
   ]);
   const [sortValue, setSortValue] = useState("");
+  const [searchString, setSearchString] = useState("");
 
   const onAddPost = (post) => {
     setPosts([...posts, { ...post, id: posts.length + 1 }]);
@@ -22,39 +23,40 @@ function App() {
     setPosts(posts.filter((post) => post.id !== id));
   };
 
-  const content =
-    posts.length > 0 ? (
-      <PostList onDeletePost={onDeletePost} posts={posts} title="ReactJS" />
-    ) : (
-      <h1>Posts not found</h1>
-    );
+  const sortedPosts = useMemo(() => {
+    console.log(1);
+    if (!sortValue) {
+      return posts;
+    }
 
-  const onSortChange = (evt) => {
-    setSortValue(evt.target.value);
-    setPosts((posts) =>
-      [...posts].sort((a, b) =>
-        a[evt.target.value].localeCompare(b[evt.target.value])
-      )
-    );
-  };
+    return [...posts].sort((a, b) => a[sortValue].localeCompare(b[sortValue]));
+  }, [sortValue, posts]);
 
-  const selectProps = {
-    name: "sort-by",
-    defaultValue: "Sort By",
-    value: sortValue,
-    onChange: onSortChange,
-    options: [
-      { value: "title", label: "Title" },
-      { value: "body", label: "Body" },
-    ],
-  };
+  const filteredPosts = useMemo(() => {
+    return sortedPosts.filter((post) =>
+      post.title.toLowerCase().includes(searchString.toLocaleLowerCase())
+    );
+  }, [sortedPosts, searchString]);
 
   return (
     <>
       <AddPostForm onAddPost={onAddPost} />
       <hr />
-      <Select {...selectProps} />
-      {content}
+      <PostsFilter
+        sort={sortValue}
+        changeSort={setSortValue}
+        search={searchString}
+        changeSearch={setSearchString}
+      />
+      {filteredPosts.length > 0 ? (
+        <PostList
+          onDeletePost={onDeletePost}
+          posts={filteredPosts}
+          title="ReactJS"
+        />
+      ) : (
+        <h1>Posts not found</h1>
+      )}
     </>
   );
 }

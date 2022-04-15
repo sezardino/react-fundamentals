@@ -42,3 +42,8 @@ ol {
   align-items: flex-start;
   gap: 16px;
 }
+
+.posts-filter {
+  display: flex;
+  gap: 16px;
+}
