@@ -4,6 +4,7 @@ import { AddPostForm, PostList } from "./components";
 import { PostsFilter } from "./components/PostsFilters";
 import { Button, Modal } from "./components/ui";
 import { usePosts } from "./hooks";
+import { PostsService } from "./services";
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -21,11 +22,9 @@ function App() {
   };
 
   const fetchPosts = async () => {
-    const response = await axios.get(
-      "https://jsonplaceholder.typicode.com/posts"
-    );
+    const posts = await PostsService.getAllPosts();
 
-    setPosts(response.data);
+    setPosts(posts);
   };
 
   useEffect(() => {
