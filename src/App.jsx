@@ -3,7 +3,7 @@ import { AddPostForm, PostList } from "./components";
 import { PostsFilter } from "./components/PostsFilters";
 import { Button, Modal } from "./components/ui";
 import { Loader } from "./components/ui/Loader/Loader";
-import { usePosts } from "./hooks";
+import { useFetch, usePosts } from "./hooks";
 import { PostsService } from "./services";
 
 function App() {
@@ -12,7 +12,15 @@ function App() {
   const [searchString, setSearchString] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { filteredPosts } = usePosts(posts, sortValue, searchString);
-  const [isFetchingPosts, setIsFetchingPosts] = useState(true);
+  const {
+    error: postsError,
+    getData: getPosts,
+    isLoading: postsLoading,
+  } = useFetch(async () => {
+    const posts = await PostsService.getAllPosts();
+
+    setPosts(posts);
+  });
 
   const onAddPost = (post) => {
     setPosts([...posts, { ...post, id: posts.length + 1 }]);
@@ -22,16 +30,8 @@ function App() {
     setPosts(posts.filter((post) => post.id !== id));
   };
 
-  const fetchPosts = async () => {
-    setIsFetchingPosts(true);
-    const posts = await PostsService.getAllPosts();
-
-    setPosts(posts);
-    setIsFetchingPosts(false);
-  };
-
   useEffect(() => {
-    fetchPosts();
+    getPosts();
   }, []);
 
   return (
@@ -42,6 +42,7 @@ function App() {
       >
         Create new Post
       </Button>
+
       <PostsFilter
         sort={sortValue}
         changeSort={setSortValue}
@@ -49,7 +50,9 @@ function App() {
         changeSearch={setSearchString}
       />
 
-      {isFetchingPosts ? (
+      {postsError && <h2>{postsError}</h2>}
+
+      {postsLoading ? (
         <div style={{ display: "flex", justifyContent: "center" }}>
           <Loader />
         </div>
@@ -60,6 +63,7 @@ function App() {
           title="ReactJS"
         />
       )}
+
       <Modal visible={isModalVisible} setVisible={setIsModalVisible}>
         <AddPostForm onAddPost={onAddPost} />
       </Modal>
