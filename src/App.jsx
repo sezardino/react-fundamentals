@@ -1,19 +1,12 @@
-import { useMemo, useState } from "react";
+import axios from "axios";
+import { useEffect, useMemo, useState } from "react";
 import { AddPostForm, PostList } from "./components";
 import { PostsFilter } from "./components/PostsFilters";
 import { Button, Modal } from "./components/ui";
 import { usePosts } from "./hooks";
 
 function App() {
-  const [posts, setPosts] = useState([
-    { id: 1, title: "Hello World", body: "Welcome to learning React!" },
-    { id: 2, title: "Installation", body: "You can install React from npm." },
-    {
-      id: 3,
-      title: "Up and running",
-      body: "You can start coding right away.",
-    },
-  ]);
+  const [posts, setPosts] = useState([]);
   const [sortValue, setSortValue] = useState("");
   const [searchString, setSearchString] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -26,6 +19,18 @@ function App() {
   const onDeletePost = (id) => {
     setPosts(posts.filter((post) => post.id !== id));
   };
+
+  const fetchPosts = async () => {
+    const response = await axios.get(
+      "https://jsonplaceholder.typicode.com/posts"
+    );
+
+    setPosts(response.data);
+  };
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
 
   return (
     <>
