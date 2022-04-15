@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { AddPostForm, PostList } from "./components";
 import { PostsFilter } from "./components/PostsFilters";
+import { Button, Modal } from "./components/ui";
 
 function App() {
   const [posts, setPosts] = useState([
@@ -14,6 +15,7 @@ function App() {
   ]);
   const [sortValue, setSortValue] = useState("");
   const [searchString, setSearchString] = useState("");
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const onAddPost = (post) => {
     setPosts([...posts, { ...post, id: posts.length + 1 }]);
@@ -40,8 +42,12 @@ function App() {
 
   return (
     <>
-      <AddPostForm onAddPost={onAddPost} />
-      <hr />
+      <Button
+        style={{ margin: "25px 0" }}
+        onClick={() => setIsModalVisible(true)}
+      >
+        Create new Post
+      </Button>
       <PostsFilter
         sort={sortValue}
         changeSort={setSortValue}
@@ -53,6 +59,9 @@ function App() {
         posts={filteredPosts}
         title="ReactJS"
       />
+      <Modal visible={isModalVisible} setVisible={setIsModalVisible}>
+        <AddPostForm onAddPost={onAddPost} />
+      </Modal>
     </>
   );
 }

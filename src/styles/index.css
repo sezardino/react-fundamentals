@@ -34,9 +34,6 @@ ol {
 }
 
 .add-post-form {
-  padding: 15px;
-  border: 1px solid teal;
-  margin-bottom: 8px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;

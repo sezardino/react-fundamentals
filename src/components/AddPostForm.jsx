@@ -15,6 +15,7 @@ export const AddPostForm = (props) => {
 
   return (
     <form className="add-post-form" onSubmit={submitHandler}>
+      <h2>Create new Post</h2>
       <Input
         type="text"
         name="title"
