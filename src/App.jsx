@@ -16,10 +16,14 @@ function App() {
     setPosts([...posts, { ...post, id: posts.length + 1 }]);
   };
 
+  const onDeletePost = (id) => {
+    setPosts(posts.filter((post) => post.id !== id));
+  };
+
   return (
     <>
       <AddPostForm onAddPost={onAddPost} />
-      <PostList posts={posts} title="ReactJS" />
+      <PostList onDeletePost={onDeletePost} posts={posts} title="ReactJS" />
     </>
   );
 }

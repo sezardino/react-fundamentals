@@ -1,6 +1,7 @@
 import { Button } from "./ui";
 
-export const PostItem = ({ post }) => {
+export const PostItem = (props) => {
+  const { post, onDeletePost } = props;
   const { title, id, body } = post;
 
   return (
@@ -12,7 +13,7 @@ export const PostItem = ({ post }) => {
         </h3>
         <p>{body}</p>
       </div>
-      <Button>Delete</Button>
+      <Button onClick={() => onDeletePost(id)}>Delete</Button>
     </article>
   );
 };
