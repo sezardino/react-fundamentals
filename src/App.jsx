@@ -26,7 +26,6 @@ function App() {
   };
 
   const sortedPosts = useMemo(() => {
-    console.log(1);
     if (!sortValue) {
       return posts;
     }
