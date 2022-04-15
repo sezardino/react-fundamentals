@@ -20,10 +20,17 @@ function App() {
     setPosts(posts.filter((post) => post.id !== id));
   };
 
+  const content =
+    posts.length > 0 ? (
+      <PostList onDeletePost={onDeletePost} posts={posts} title="ReactJS" />
+    ) : (
+      <h1>Posts not found</h1>
+    );
+
   return (
     <>
       <AddPostForm onAddPost={onAddPost} />
-      <PostList onDeletePost={onDeletePost} posts={posts} title="ReactJS" />
+      {content}
     </>
   );
 }
