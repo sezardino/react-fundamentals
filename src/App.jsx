@@ -48,15 +48,11 @@ function App() {
         search={searchString}
         changeSearch={setSearchString}
       />
-      {filteredPosts.length > 0 ? (
-        <PostList
-          onDeletePost={onDeletePost}
-          posts={filteredPosts}
-          title="ReactJS"
-        />
-      ) : (
-        <h1>Posts not found</h1>
-      )}
+      <PostList
+        onDeletePost={onDeletePost}
+        posts={filteredPosts}
+        title="ReactJS"
+      />
     </>
   );
 }
