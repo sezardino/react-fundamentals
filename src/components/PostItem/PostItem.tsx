@@ -1,8 +1,10 @@
+import React from "react";
 import { Button } from "../ui";
 
 import styles from "./PostItem.module.css";
+import { PostItemProps } from "./PostItem.props";
 
-export const PostItem = (props) => {
+export const PostItem: React.FC<PostItemProps> = (props) => {
   const { post, onDeletePost } = props;
   const { title, id, body } = post;
 

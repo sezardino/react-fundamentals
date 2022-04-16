@@ -1,8 +1,9 @@
-import { useMemo } from "react";
+import React, { useMemo } from "react";
 
 import styles from "./Pagination.module.css";
+import { PaginationProps } from "./Pagination.props";
 
-export const Pagination = (props) => {
+export const Pagination: React.FC<PaginationProps> = (props) => {
   const { total, limit, current, setCurrent, ...rest } = props;
 
   const pages = useMemo(() => {

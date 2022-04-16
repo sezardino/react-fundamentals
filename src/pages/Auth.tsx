@@ -7,7 +7,7 @@ const Auth = () => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
 
-  const submitHandler = (evt) => {
+  const submitHandler = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     loginHandler();
   };

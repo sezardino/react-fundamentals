@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Post } from "../types";
+import { Comment, Post } from "../types";
 
 export class PostsService {
   static async getAllPosts(limit: number, page: number) {
@@ -27,7 +27,7 @@ export class PostsService {
     return response.data;
   }
 
-  static async getCommentsByPostId(id: number) {
+  static async getCommentsByPostId(id: number): Promise<Comment[]> {
     const response = await axios.get<Comment[]>(
       `https://jsonplaceholder.typicode.com/posts/${id}/comments`
     );

@@ -5,10 +5,11 @@ import { Button, Pagination, Modal } from "../components/ui";
 import { Loader } from "../components/ui/Loader/Loader";
 import { usePosts, useFetch } from "../hooks";
 import { PostsService } from "../services";
+import { Post } from "../types";
 
 export const Posts = () => {
-  const [posts, setPosts] = useState([]);
-  const [sortValue, setSortValue] = useState("");
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [sortValue, setSortValue] = useState<keyof Post>("" as keyof Post);
   const [searchString, setSearchString] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [limit] = useState(10);
@@ -20,16 +21,19 @@ export const Posts = () => {
     getData: getPosts,
     isLoading: postsLoading,
   } = useFetch(async (limit, page) => {
-    const response = await PostsService.getAllPosts(limit, page);
+    const response = await PostsService.getAllPosts(
+      limit as number,
+      page as number
+    );
     setTotalCount(+response.totalCount);
     setPosts(response.data);
   });
 
-  const onAddPost = (post) => {
-    setPosts([...posts, { ...post, id: posts.length + 1 }]);
+  const onAddPost = (post: Pick<Post, "body" | "title">) => {
+    setPosts([...posts, { ...post, id: Date.now() }]);
   };
 
-  const onDeletePost = (id) => {
+  const onDeletePost = (id: number) => {
     setPosts(posts.filter((post) => post.id !== id));
   };
 
@@ -53,7 +57,7 @@ export const Posts = () => {
         changeSearch={setSearchString}
       />
 
-      {postsError && <h2>{postsError}</h2>}
+      {postsError && <h2>{new String(postsError).valueOf()}</h2>}
 
       {postsLoading ? (
         <div style={{ display: "flex", justifyContent: "center" }}>

@@ -1,9 +1,10 @@
-import { CSSTransition } from "react-transition-group";
-import { TransitionGroup } from "react-transition-group";
+import React from "react";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { PostItem } from "../PostItem/PostItem";
 import styles from "./PostList.module.css";
+import { PostListProps } from "./PostList.props";
 
-export const PostList = (props) => {
+export const PostList: React.FC<PostListProps> = (props) => {
   const { posts, title, onDeletePost } = props;
 
   if (!posts.length) {

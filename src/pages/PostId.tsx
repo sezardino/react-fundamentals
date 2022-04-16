@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Loader } from "../components/ui";
 import { useFetch } from "../hooks";
 import { PostsService } from "../services";
+import { Comment, Post } from "../types";
 
 const PostId = () => {
   const params = useParams();
-  const navigate = useNavigate();
-  const [post, setPost] = useState(null);
-  const [comments, setComments] = useState([]);
+  const [post, setPost] = useState<Post | null>(null);
+  const [comments, setComments] = useState<Comment[]>([]);
 
   const { getData: getPost, isLoading: isPostLoading } = useFetch(async (id) =>
-    setPost(await PostsService.getPostById(id))
+    setPost(await PostsService.getPostById(id as number))
   );
 
-  const { getData: getComments, isLoading: isCommentsLoading } = useFetch(
-    async (id) => setComments(await PostsService.getCommentsByPostId(id))
+  const { getData: getComments } = useFetch(async (id) =>
+    setComments(await PostsService.getCommentsByPostId(id as number))
   );
 
   useEffect(() => {

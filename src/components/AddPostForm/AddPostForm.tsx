@@ -1,12 +1,13 @@
-import { useState } from "react";
-import { Button, Input } from "./ui";
+import React, { useState } from "react";
+import { Button, Input } from "../ui";
+import { AddPostFormProps } from "./AddPostForm.props";
 
-export const AddPostForm = (props) => {
+export const AddPostForm: React.FC<AddPostFormProps> = (props) => {
   const { onAddPost } = props;
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
 
-  const submitHandler = (evt) => {
+  const submitHandler = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     onAddPost({ title, body });
     setTitle("");
@@ -30,7 +31,9 @@ export const AddPostForm = (props) => {
         value={body}
         placeholder="Body"
         className="add-post-form__textarea"
-        onChange={(evt) => setBody(evt.target.value)}
+        onChange={(evt: React.ChangeEvent<HTMLInputElement>) =>
+          setBody(evt.target.value)
+        }
       />
       <Button type="submit">Create new Post</Button>
     </form>

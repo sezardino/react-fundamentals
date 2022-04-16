@@ -1,6 +1,8 @@
+import React from "react";
 import styles from "./Select.module.css";
+import { SelectProps } from "./Select.props";
 
-export const Select = (props) => {
+export const Select: React.FC<SelectProps> = (props) => {
   const { defaultValue, options, ...rest } = props;
 
   return (
