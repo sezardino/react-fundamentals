@@ -21,6 +21,9 @@ export const Navbar = () => {
             <Link to="/about">About</Link>
           </li>
           <li>
+            <Link to="redux">Redux</Link>
+          </li>
+          <li>
             {isAuth ? (
               <Button onClick={logout}>Logout</Button>
             ) : (
