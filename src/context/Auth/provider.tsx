@@ -1,7 +1,12 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { AuthContext } from "./context";
 
-export function AuthProvider({ children }) {
+interface Props {
+  children: React.ReactNode;
+}
+
+export const AuthProvider: React.FC<Props> = (props) => {
+  const { children } = props;
   const [isAuth, setIsAuth] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -10,4 +15,4 @@ export function AuthProvider({ children }) {
       {children}
     </AuthContext.Provider>
   );
-}
+};

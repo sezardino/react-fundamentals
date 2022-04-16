@@ -2,7 +2,7 @@ import { createContext } from "react";
 
 const defaultValue = {
   isAuth: false,
-  setIsAuth: (value) => {},
+  setIsAuth: (value: boolean) => {},
   isLoading: true,
 };
 
