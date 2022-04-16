@@ -4,3 +4,5 @@ export * from "./Select/Select";
 export * from "./Portal/Portal";
 export * from "./Modal/Modal";
 export * from "./Pagination/Pagination";
+export * from "./Navbar/Navbar";
+export * from "./Loader/Loader";
