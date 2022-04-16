@@ -24,15 +24,6 @@ ol {
   margin: 0;
 }
 
-.post-item {
-  padding: 15px;
-  border: 1px solid teal;
-  margin-bottom: 8px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .add-post-form {
   display: flex;
   flex-direction: column;

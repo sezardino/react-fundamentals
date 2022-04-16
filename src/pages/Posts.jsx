@@ -11,7 +11,7 @@ export const Posts = () => {
   const [sortValue, setSortValue] = useState("");
   const [searchString, setSearchString] = useState("");
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [limit, setLimit] = useState(10);
+  const [limit] = useState(10);
   const [page, setPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const { filteredPosts } = usePosts(posts, sortValue, searchString);

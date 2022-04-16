@@ -1,6 +1,6 @@
 import { CSSTransition } from "react-transition-group";
 import { TransitionGroup } from "react-transition-group";
-import { PostItem } from "../PostItem";
+import { PostItem } from "../PostItem/PostItem";
 import styles from "./PostList.module.css";
 
 export const PostList = (props) => {

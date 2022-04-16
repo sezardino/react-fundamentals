@@ -14,4 +14,20 @@ export class PostsService {
       totalCount: response.headers["x-total-count"],
     };
   }
+
+  static async getPostById(id) {
+    const response = await axios(
+      `https://jsonplaceholder.typicode.com/posts/${id}`
+    );
+
+    return response.data;
+  }
+
+  static async getCommentsByPostId(id) {
+    const response = await axios(
+      `https://jsonplaceholder.typicode.com/posts/${id}/comments`
+    );
+
+    return response.data;
+  }
 }
