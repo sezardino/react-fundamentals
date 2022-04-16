@@ -1,8 +1,12 @@
 import { Link } from "react-router-dom";
+import { useAuth } from "../../../context";
+import { Button } from "../Button/Button";
 
 import styles from "./Navbar.module.css";
 
 export const Navbar = () => {
+  const { isAuth, logout } = useAuth();
+
   return (
     <header>
       <nav>
@@ -15,6 +19,13 @@ export const Navbar = () => {
           </li>
           <li>
             <Link to="/about">About</Link>
+          </li>
+          <li>
+            {isAuth ? (
+              <Button onClick={logout}>Logout</Button>
+            ) : (
+              <Link to="/auth">Login</Link>
+            )}
           </li>
         </ul>
       </nav>
