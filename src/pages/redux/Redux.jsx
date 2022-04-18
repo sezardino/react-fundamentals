@@ -6,7 +6,7 @@ const Redux = () => {
     <div>
       <h1>Redux</h1>
       <div className="grid grid-cols-12 my-4">
-        <ul className="col-start-1 col-end-3 grid gap-6 justify-items-start">
+        <ul className="col-start-1 col-end-3 grid gap-6 justify-start justify-items-start">
           <li>
             <Button to="bank">Bank</Button>
           </li>

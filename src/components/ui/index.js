@@ -6,3 +6,4 @@ export * from "./Modal/Modal";
 export * from "./Pagination/Pagination";
 export * from "./Navbar/Navbar";
 export * from "./Loader/Loader";
+export * from "./List/List";
