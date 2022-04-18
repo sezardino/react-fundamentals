@@ -13,6 +13,8 @@ const PostsId = lazy(() => import("../pages/index/PostId"));
 const Redux = lazy(() => import("../pages/redux/Redux"));
 const Bank = lazy(() => import("../pages/redux/Bank"));
 const Customers = lazy(() => import("../pages/redux/Customers"));
+const ReduxTS = lazy(() => import("../pages/redux-ts/Index"));
+const Users = lazy(() => import("../pages/redux-ts/Users"));
 
 export const routes = [
   {
@@ -40,5 +42,10 @@ export const routes = [
       { path: "bank", element: <Bank /> },
       { path: "customers", element: <Customers /> },
     ],
+  },
+  {
+    path: "/redux-ts",
+    element: <ReduxTS />,
+    children: [{ path: "users", element: <Users /> }],
   },
 ];
