@@ -1,4 +1,5 @@
 .button {
+  display: flex;
   cursor: pointer;
   background: transparent;
   color: teal;
