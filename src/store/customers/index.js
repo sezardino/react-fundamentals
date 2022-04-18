@@ -1,6 +1,7 @@
 const ADD_CUSTOMER = "ADD_CUSTOMER";
 const REMOVE_CUSTOMER = "REMOVE_CUSTOMER";
 const REMOVE_LAST_CUSTOMER = "REMOVE_LAST_CUSTOMER";
+const ADD_MANY_CUSTOMERS = "ADD_MANY_CUSTOMERS";
 
 export const addCustomerActionCreator = (customer) => ({
   type: ADD_CUSTOMER,
@@ -13,6 +14,16 @@ export const removeCustomerActionCreator = (id) => ({
 export const removeLastCustomerActionCreator = () => ({
   type: REMOVE_LAST_CUSTOMER,
 });
+export const addManyCustomersActionCreator = (customers) => ({
+  type: ADD_MANY_CUSTOMERS,
+  payload: customers,
+});
+
+export const fetchCustomers = () => (dispatch) => {
+  fetch("https://jsonplaceholder.typicode.com/users")
+    .then((response) => response.json())
+    .then((json) => dispatch(addManyCustomersActionCreator(json)));
+};
 
 const defaultState = {
   customers: [],
@@ -34,6 +45,9 @@ export const customers = (state = defaultState, action) => {
       const customers = [...state.customers];
       customers.pop();
       return { ...state, customers };
+    }
+    case ADD_MANY_CUSTOMERS: {
+      return { ...state, customers: [...state.customers, ...action.payload] };
     }
     default: {
       return state;

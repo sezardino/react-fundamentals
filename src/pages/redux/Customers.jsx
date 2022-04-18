@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button, List } from "../../components/ui";
 import {
   addCustomerActionCreator,
+  fetchCustomers,
   removeCustomerActionCreator,
   removeLastCustomerActionCreator,
 } from "../../store/customers";
@@ -32,10 +33,15 @@ const Customers = () => {
     dispatch(removeLastCustomerActionCreator());
   };
 
+  const getCustomersFromDB = () => {
+    dispatch(fetchCustomers());
+  };
+
   return (
     <div>
       <div className="flex gap-2">
         <Button onClick={addCustomer}>Add Customer</Button>
+        <Button onClick={getCustomersFromDB}>Get Customers from DB</Button>
         {store.customers.length ? (
           <Button onClick={removeLastCustomer}>Remove Last Customer</Button>
         ) : (
