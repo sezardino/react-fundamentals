@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Button } from "../components/ui";
+import { Button } from "../../components/ui";
 
 const Bank = () => {
   const dispatch = useDispatch();

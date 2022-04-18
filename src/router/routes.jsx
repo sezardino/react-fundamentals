@@ -3,15 +3,15 @@ import { Outlet } from "react-router-dom";
 
 import { ProtectedRoute } from "./ProtectedRoute";
 
-import Home from "../pages/Home";
-import NotFound from "../pages/NotFound";
+import Home from "../pages/index/Home";
+import NotFound from "../pages/index/NotFound";
 
-const About = lazy(() => import("../pages/About"));
-const Auth = lazy(() => import("../pages/Auth"));
-const Posts = lazy(() => import("../pages/Posts"));
-const PostsId = lazy(() => import("../pages/PostId"));
-const Redux = lazy(() => import("../pages/Redux"));
-const Bank = lazy(() => import("../pages/Bank"));
+const About = lazy(() => import("../pages/index/About"));
+const Auth = lazy(() => import("../pages/index/Auth"));
+const Posts = lazy(() => import("../pages/index/Posts"));
+const PostsId = lazy(() => import("../pages/index/PostId"));
+const Redux = lazy(() => import("../pages/redux/Redux"));
+const Bank = lazy(() => import("../pages/redux/Bank"));
 
 export const routes = [
   {
