@@ -1,6 +1,11 @@
 import { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, List } from "../../components/ui";
+import {
+  addCustomerActionCreator,
+  removeCustomerActionCreator,
+  removeLastCustomerActionCreator,
+} from "../../store/customers";
 
 const Customers = () => {
   const store = useSelector((store) => store.customers);
@@ -11,23 +16,20 @@ const Customers = () => {
   }, [store.customers]);
 
   const addCustomer = () => {
-    dispatch({
-      type: "ADD_CUSTOMER",
-      payload: { name: prompt("Enter customer name", ""), id: Date.now() },
-    });
+    dispatch(
+      addCustomerActionCreator({
+        name: prompt("Enter customer name", ""),
+        id: Date.now(),
+      })
+    );
   };
 
   const removeCustomer = (id) => {
-    dispatch({
-      type: "REMOVE_CUSTOMER",
-      payload: { id },
-    });
+    dispatch(removeCustomerActionCreator(id));
   };
 
   const removeLastCustomer = () => {
-    dispatch({
-      type: "REMOVE_LAST_CUSTOMER",
-    });
+    dispatch(removeLastCustomerActionCreator());
   };
 
   return (
